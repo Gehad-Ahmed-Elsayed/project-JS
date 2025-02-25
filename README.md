@@ -1,1 +1,1 @@
-# Examination-system-using-JS
+# Examination-system-using-Java script
