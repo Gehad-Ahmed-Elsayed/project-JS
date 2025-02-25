@@ -1,0 +1,88 @@
+
+body {
+    font-family: Arial, sans-serif; 
+    text-align: center;
+    margin: 20px;
+}
+
+h1, h2 {
+    font-family: 'Pacifico', cursive; 
+}
+
+.hidden {
+    display: none;
+}
+
+#examContainer, #resultContainer {
+    margin-top: 20px;
+}
+
+#questionImage {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    margin: 10px 0;
+}
+
+
+button {
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    border: none;
+    background-color: #f0f0f0;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #ddd;
+    transform: scale(1.05);
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+
+#answers {
+    display: flex;
+    flex-direction: column; /* button under others*/
+    gap: 10px; 
+    align-items: center; 
+}
+
+#answers button {
+    width: 80%; 
+    padding: 12px;
+    font-size: 18px;
+    border-radius: 8px; 
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    font-family: 'Pacifico', cursive; 
+
+}
+
+
+#answers button.selected {
+    background-color: gray;
+    color: white;
+}
+
+.progress-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+#progressCanvas {
+    display: block;
+    margin: auto;
+}
+#scoreText {
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+}

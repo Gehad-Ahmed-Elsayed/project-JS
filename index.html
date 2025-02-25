@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Exam System</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <script defer src="script.js"></script>
+</head>
+<body>
+    
+    <div id="home">
+        <h1>Welcome to the Exam</h1>
+        <button id="startButton">Start Exam</button>
+    </div>
+
+    <div id="examContainer" class="hidden">
+        <div id="timer">Time Left: <span id="time">60</span>s</div>
+        <h2 id="questionTitle"></h2>
+        <img id="questionImage" src="" alt="Question Image">
+        <div id="answers"></div>
+        <button id="nextButton" disabled>Next</button>
+    </div>
+
+    <div id="resultContainer" class="hidden">
+        <h2>Your Score:</h2>
+        <div class="progress-container">
+            <canvas id="progressCanvas" width="120" height="120"></canvas>
+                <p id="scoreText"></p>
+            <p id="correctAnswers"></p>
+            <p id="wrongAnswers"></p>
+        </div>
+    </div>
+</body>
+</html>
