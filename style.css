@@ -1,8 +1,8 @@
-
 body {
     font-family: Arial, sans-serif; 
     text-align: center;
     margin: 20px;
+    background-color: #f2ddcb;
 }
 
 h1, h2 {
@@ -18,12 +18,11 @@ h1, h2 {
 }
 
 #questionImage {
-    width: 200px;
-    height: 200px;
+    width: 300px;
+    height: 220px;
     object-fit: cover;
     margin: 10px 0;
 }
-
 
 button {
     padding: 10px;
@@ -36,7 +35,7 @@ button {
 }
 
 button:hover {
-    background-color: #ddd;
+    background-color: #15b025;
     transform: scale(1.05);
 }
 
@@ -45,44 +44,70 @@ button:disabled {
     cursor: not-allowed;
 }
 
-
 #answers {
     display: flex;
-    flex-direction: column; /* button under others*/
+    flex-direction: column;
     gap: 10px; 
     align-items: center; 
 }
 
 #answers button {
-    width: 80%; 
+    width: 50%; 
     padding: 12px;
     font-size: 18px;
     border-radius: 8px; 
-    background-color: #f9f9f9;
-    border: 1px solid #ccc;
+    background-color: #565b98;
+    border: 2px solid #ccc;
     font-family: 'Pacifico', cursive; 
-
 }
-
 
 #answers button.selected {
-    background-color: gray;
+    background-color: rgb(59, 200, 23);
     color: white;
 }
+#timer {
+    font-size: 28px; 
+    font-weight: bold; 
+    color: #d9534f; 
+    text-align: center;
+    margin-bottom: 15px; 
+    background-color: #fff3cd; 
+    padding: 10px; 
+    border-radius: 8px; 
+    display: inline-block; 
+}
 
+#time {
+    font-size: 32px;  
+    font-weight: bold;
+    color: #ff0000;  
+}
+#studentNameDisplay {
+    font-size: 18px;
+    font-weight: bold;
+    position: absolute;
+    left: 20px;
+    top: 10px;
+    color: #444;
+}
 .progress-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 20px;
+    justify-content: center;
+    text-align: center;
 }
 
-#progressCanvas {
+svg {
+    transform: rotate(-90deg);
     display: block;
     margin: auto;
 }
 #scoreText {
-    font-size: 18px;
-    font-weight: bold;
-    text-align: center;
+    font-size: 24px;  
+    font-weight: bold; 
+    color: #333;  
+    text-align: center; 
+    margin-top: 10px;
 }
+

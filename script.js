@@ -8,85 +8,105 @@ class Question {
 }
 
 const questions = [
-    { title: "What is the name of this animal?", image: "images/dog.jpg", answers: ["Cat", "Dog", "Fox"], correctAnswer: "Dog" },
-    { title: "What is the name of this animal?", image: "images/elephant.jpg", answers: ["Rhino", "Elephant", "Hippo"], correctAnswer: "Elephant" },
-    { title: "What is the name of this animal?", image: "images/gira.jpg", answers: ["Deer", "Giraffe", "Camel"], correctAnswer: "Giraffe" },
-    { title: "What is the name of this animal?", image: "images/zebra.jpg", answers: ["Horse", "Donkey", "Zebra"], correctAnswer: "Zebra" },
-    { title: "What is the name of this animal?", image: "images/kangaroo.jpg", answers: ["Kangaroo", "Rabbit", "Squirrel"], correctAnswer: "Kangaroo" },
-    { title: "What is the name of this animal?", image: "images/lion.jpg", answers: ["Lion", "Tiger", "Leopard"], correctAnswer: "Lion" },
-    { title: "What is the name of this animal?", image: "images/panda.jpg", answers: ["Bear", "Panda", "Koala"], correctAnswer: "Panda" },
-    { title: "What is the name of this animal?", image: "images/fox.jpg", answers: ["Wolf", "Fox", "Coyote"], correctAnswer: "Fox" },
-    { title: "What is the name of this animal?", image: "images/dolphin.jpg", answers: ["Shark", "Whale", "Dolphin"], correctAnswer: "Dolphin" },
-    { title: "What is the name of this animal?", image: "images/parrot.jpg", answers: ["Owl", "Parrot", "Pigeon"], correctAnswer: "Parrot" }
+    { title: "What is the color of this rose?", image: "images/red.png", answers: ["Red", "Pink", "White"], correctAnswer: "Red" },
+    { title: "What is the color of this rose?", image: "images/white.png", answers: ["Yellow", "White", "Purple"], correctAnswer: "White" },
+    { title: "What is the color of this rose?", image: "images/yellow.png", answers: ["Orange", "Yellow", "Blue"], correctAnswer: "Yellow" },
+    { title: "What is the color of this rose?", image: "images/pink.png", answers: [ "Red", "Green","Pink"], correctAnswer: "Pink" },
+    { title: "What is the color of this rose?", image: "images/orange.png", answers: ["Brown","Orange","Black"], correctAnswer: "Orange" },
+    { title: "What is the color of this rose?", image: "images/purple.png", answers: ["Purple", "Blue", "White"], correctAnswer: "Purple" },
+    { title: "What is the color of this rose?", image: "images/blue.png", answers: ["Gray", "Pink","Blue"], correctAnswer: "Blue" },
+    { title: "What is the color of this rose?", image: "images/black.png", answers: ["Black", "Red", "Purple"], correctAnswer: "Black" },
+    { title: "What is the color of this rose?", image: "images/green.png", answers: ["Yellow","Green", "White"], correctAnswer: "Green" },
+    { title: "What is the color of this rose?", image: "images/rainbow.png", answers: ["Blue","Rainbow","Purple"], correctAnswer: "Rainbow" }
 ];
-
 
 let currentQuestionIndex = 0;
 let score = 0;
 let timer;
 let timeLeft = 60;
-let studentName = "";
 
+/*****************  Enter name ***********************/
 document.getElementById("startButton").addEventListener("click", () => {
-    studentName = prompt("Enter your name:");
-    while (!studentName) {
-        studentName = prompt("Name is required! Please enter your name:");
+    let studentName = sessionStorage.getItem("studentName");
+
+    if (!studentName) {
+        const namePattern = /^[a-zA-Z\u0600-\u06FF]{3,}\s[a-zA-Z\u0600-\u06FF]{3,}$/; 
+
+        while (true) {
+            studentName = prompt("Enter your name and father’s name (e.g., Gehad Ahmed):").trim();
+
+            if (!studentName) {
+                alert("⚠️ Name is required! Please enter your first and father’s name.");
+            } else if (!namePattern.test(studentName)) {
+                alert("⚠️ Invalid format! Enter exactly two words, each with at least 3 letters (e.g., Gehad Ahmed).");
+            } else {
+                sessionStorage.setItem("studentName", studentName); 
+                break; 
+            }
+        }
     }
+
     startExam();
 });
 
-document.getElementById("nextButton").addEventListener("click", nextQuestion);
-
+/*****************  Start Exam ***********************/
 function startExam() {
     document.getElementById("home").classList.add("hidden");
     document.getElementById("examContainer").classList.remove("hidden");
+    
+    document.getElementById("studentNameDisplay").textContent = `Student: ${sessionStorage.getItem("studentName")}`;
+
     startTimer();
     loadQuestion();
 }
 
+/*****************  Start timer  ***********************/
 function startTimer() {
     timer = setInterval(() => {
         timeLeft--;
         document.getElementById("time").textContent = timeLeft;
-        if (timeLeft === 0) endExam();
+        if (timeLeft === 0) 
+            endExam();
     }, 1000);
 }
 
+/***************** load and display the current question ***********************/
 function loadQuestion() {
+    
     const question = questions[currentQuestionIndex];
-    document.getElementById("questionTitle").textContent = question.title;
+    document.getElementById("questionTitle").textContent = `Question ${currentQuestionIndex + 1}: ${question.title}`;
     document.getElementById("questionImage").src = question.image;
-
-    const answersContainer = document.getElementById("answers");
+   
+    const answersContainer = document.getElementById("answers"); 
     answersContainer.innerHTML = "";
 
-    question.answers.forEach(answer => {
-        const button = document.createElement("button");
-        button.textContent = answer;
-        button.onclick = () => selectAnswer(answer, button); 
-        answersContainer.appendChild(button);
+    question.answers.forEach(answer => {   
+        const btn = document.createElement("button");  
+        btn.textContent = answer;
+        btn.onclick = () => selectAnswer(answer, btn);   
+        answersContainer.appendChild(btn);
     });
 }
 
+/*****************  Select Answer   ********************/
 function selectAnswer(answer, button) {
-    document.getElementById("nextButton").disabled = false;
 
-   
+    document.getElementById("nextButton").disabled = false;
+    
     document.querySelectorAll("#answers button").forEach(btn => {
         btn.classList.remove("selected");
-    });
-
+    }); 
     
-    button.classList.add("selected");
-
+    button.classList.add("selected"); 
     
-    if (answer === questions[currentQuestionIndex].correctAnswer) {
+    if (answer === questions[currentQuestionIndex].correctAnswer) {        
         score++;
     }
 }
-
-
-function nextQuestion() {
+/********************* */
+document.getElementById("nextButton").addEventListener("click", nextQuestion);
+/*****************  Next Question  ********************/
+/*function nextQuestion() {
     currentQuestionIndex++;
     if (currentQuestionIndex < questions.length) {
         loadQuestion();
@@ -94,52 +114,38 @@ function nextQuestion() {
     } else {
         endExam();
     }
-}
-function drawProgressCircle(percentage) {
-    const canvas = document.getElementById("progressCanvas");
-    const ctx = canvas.getContext("2d");
-    
-    const centerX = canvas.width / 2;
-    const centerY = canvas.height / 2;
-    const radius = 50;
-    const startAngle = -0.5 * Math.PI; 
-    const endAngle = startAngle + (percentage / 100) * (2 * Math.PI);
+}*/
+function nextQuestion() {
+    currentQuestionIndex++;
 
-    
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
-    ctx.strokeStyle = "#ddd";
-    ctx.lineWidth = 10;
-    ctx.stroke();
-
-    ctx.beginPath();
-    ctx.arc(centerX, centerY, radius, startAngle, endAngle);
-    ctx.strokeStyle = "green";
-    ctx.lineWidth = 10;
-    ctx.lineCap = "round";
-    ctx.stroke();
-
-    
-    ctx.fillStyle = "black";
-    ctx.font = "16px Arial";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
-    ctx.fillText(`${percentage.toFixed(0)}%`, centerX, centerY);
+    if (currentQuestionIndex < questions.length - 1) {
+        loadQuestion();
+        document.getElementById("nextButton").disabled = true;
+    } else if (currentQuestionIndex === questions.length - 1) {
+        loadQuestion();
+        document.getElementById("nextButton").textContent = "Submit Exam";
+        document.getElementById("nextButton").onclick = endExam;
+    }
 }
 
+
+/*****************  Update Progress Circle  ********************/
+function updateProgressCircle(percentage) {
+    const circle = document.getElementById("progressCircle");
+    const circumference = 2 * Math.PI * 45;
+    const offset = circumference - (percentage / 100) * circumference;
+    
+    circle.style.strokeDashoffset = offset;
+    document.getElementById("percentageText").textContent = `${percentage.toFixed(0)}%`;
+}
+
+/*****************  End Exam and show result  ********************/
 function endExam() {
     clearInterval(timer);
     document.getElementById("examContainer").classList.add("hidden");
     document.getElementById("resultContainer").classList.remove("hidden");
-
-    let percentage = (score / questions.length) * 100;
-
-    
-    drawProgressCircle(percentage);
-
-    
+    let percentage = (score / questions.length) * 100; 
+    updateProgressCircle(percentage);
     document.getElementById("scoreText").textContent = `You have ${score} out of ${questions.length} correct answers`;
 }
+
